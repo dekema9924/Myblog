@@ -1,9 +1,65 @@
-import React from 'react'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Brightness3Icon from '@mui/icons-material/Brightness3';
+import EmailIcon from '@mui/icons-material/Email';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
+import { useState } from 'react';
+
 
 function Header() {
-  return (
-    <div>Header</div>
-  )
+    const[isNavOpen, setIsNavOpen] = useState(false)
+
+    isNavOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
+
+    return (
+        <>
+            <header className='flex items-center h-22 justify-around fixed w-full top-0 bg-white z-50'>
+                <div className='flex items-center gap-4'>
+                    <MoreHorizIcon onClick={()=>setIsNavOpen(true)} className='lg:hidden ml-4 cursor-pointer' />
+                    <h1 className='text-[2em] font-bold'>Jzeko</h1>
+                </div>
+                <ul className='lg:flex hidden gap-4 items-center font-bold '>
+                    <li>LifeStyle</li>
+                    <li>Beauty</li>
+                    <li>Travel</li>
+                    <li className='border-2 bg-red-400 p-1 rounded-md text-white'><EmailIcon />Subscribe</li>
+                </ul>
+
+                <div>
+                    <Brightness3Icon className='mr-4 cursor-pointer' />
+                    <SearchIcon className='cursor-pointer' />
+                </div>
+            </header>
+
+
+{/* mobile nav */}
+            <nav className={` w-10/12 h-[100vh] bg-white z-50 top-0  fixed lg:hidden transition-all duration-500 ${isNavOpen ? "left-0" : "-left-[1500px]"} `}>
+                <div className='flex items-center justify-between '>
+                    <h1 className='text-[2em] ml-4 font-bold'>Jzeko</h1>
+                    <CloseIcon onClick={()=>setIsNavOpen(false)} className='cursor-pointer mr-4' />
+                </div>
+                <hr className='mt-4 text-gray-400 w-11/12 m-auto' />
+
+
+                <ul className='mt-4 flex flex-col gap-4 p-4 text-2xl font-semibold'>
+                    <li>LifeStyle</li>
+                    <li>Beauty</li>
+                    <li>Travel</li>
+                    <li>Art & Design</li>
+                    <li>Subscribe</li>
+                    <form>
+                        <div className='relative flex items-center'>
+                            <input className='border-2 text-sm w-11/12 h-10 pl-2 rounded-md border-gray-400 outline-none' type="text" name="" placeholder='search and press enter ' />
+                            <SearchIcon className='absolute right-14 ' />
+                        </div>
+                    </form>
+                    <p className='text-lg'>Dark Mode <Brightness3Icon /></p>
+
+                </ul>
+
+            </nav>
+        </>
+    )
 }
 
 export default Header
