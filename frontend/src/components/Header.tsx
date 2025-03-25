@@ -1,42 +1,52 @@
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Brightness3Icon from '@mui/icons-material/Brightness3';
-import EmailIcon from '@mui/icons-material/Email';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import SubscribeButton from './SubscribeButton';
 
 
 function Header() {
-    const[isNavOpen, setIsNavOpen] = useState(false)
+    const [isNavOpen, setIsNavOpen] = useState(false)
 
     isNavOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
 
     return (
         <>
             <header className='flex items-center h-22 justify-around fixed w-full top-0 bg-white z-50'>
+
                 <div className='flex items-center gap-4'>
-                    <MoreHorizIcon onClick={()=>setIsNavOpen(true)} className='lg:hidden ml-4 cursor-pointer' />
-                    <h1 className='text-[2em] font-bold'>Jzeko</h1>
+                    <MoreHorizIcon
+                        onClick={() => setIsNavOpen(true)}
+                        className="ml-4 cursor-pointer block md:hidden"
+                    />                
+                     <Link to={'/'} className='text-[2em] font-bold'>Jzeko</Link>
                 </div>
                 <ul className='lg:flex hidden gap-4 items-center font-bold '>
                     <li>LifeStyle</li>
                     <li>Beauty</li>
                     <li>Travel</li>
-                    <li className='border-2 bg-red-400 p-1 rounded-md text-white'><EmailIcon />Subscribe</li>
+                    <SubscribeButton/>
                 </ul>
 
-                <div>
+                <div className='flex items-center gap-2'>
                     <Brightness3Icon className='mr-4 cursor-pointer' />
-                    <SearchIcon className='cursor-pointer' />
+                    {/* <SearchIcon className='cursor-pointer ' /> */}
+                    <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link>
+                    <Link to={'/Register'} className='underline'>Register</Link>
+
                 </div>
             </header>
 
 
-{/* mobile nav */}
+
+            {/* mobile nav */}
             <nav className={` w-10/12 h-[100vh] bg-white z-50 top-0  fixed lg:hidden transition-all duration-500 ${isNavOpen ? "left-0" : "-left-[1500px]"} `}>
                 <div className='flex items-center justify-between '>
+
                     <h1 className='text-[2em] ml-4 font-bold'>Jzeko</h1>
-                    <CloseIcon onClick={()=>setIsNavOpen(false)} className='cursor-pointer mr-4' />
+                    <CloseIcon onClick={() => setIsNavOpen(false)} className='cursor-pointer mr-4' />
                 </div>
                 <hr className='mt-4 text-gray-400 w-11/12 m-auto' />
 
@@ -54,6 +64,8 @@ function Header() {
                         </div>
                     </form>
                     <p className='text-lg'>Dark Mode <Brightness3Icon /></p>
+                    <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link>
+
 
                 </ul>
 

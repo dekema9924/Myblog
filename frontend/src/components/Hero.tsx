@@ -2,8 +2,10 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {  useEffect, useState } from 'react';
 import Feautured from './Feautured';
 import RandomPost from './RandomPost';
+import { Link } from 'react-router-dom';
 
-export interface Blog {
+
+export interface BlogInterface {
     id: number
     title: string
     date: string
@@ -13,7 +15,7 @@ export interface Blog {
     img: string
 }
 
-export const initialBlog: Blog[] = [
+export const initialBlog: BlogInterface[] = [
     {
         title: 'Style begin mr heard by in music do',
         date: 'March 6, 2025',
@@ -83,27 +85,21 @@ function Hero() {
     const [isBottom, setIsBottom] = useState(false);
 
     useEffect(() => {
-      const handleScroll = () => {
-        const footerHeight = 100; // Adjust based on actual footer height
-        const scrollY = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight;
-        const winHeight = window.innerHeight;
-  
-        // Check if the user has scrolled to the bottom
-        if (scrollY + winHeight >= docHeight - footerHeight) {
-          setIsBottom(true);
-        } else {
-          setIsBottom(false);
-        }
-      };
-  
-      window.addEventListener("scroll", handleScroll);
-      
-      // Cleanup on unmount
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
+        const handleScroll = () => {
+          const scrollPosition = window.scrollY + window.innerHeight;
+          const docHeight = document.documentElement.scrollHeight;
+    
+          // Check if the user is at the bottom
+          if (scrollPosition >= docHeight - 10) {
+            setIsBottom(true);
+          } else {
+            setIsBottom(false);
+          }
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+      }, []);
   
 
 
@@ -116,9 +112,9 @@ function Hero() {
             </div>
             <div className='md:flex flex-col justify-between  gap-10'>
                 <div className=' md:w-9/12'>
-                    <div
+                    <Link to={`/blog/${rndBlog.id}`}
                         style={{ backgroundImage: `url(${rndBlog.img})` }}
-                        className="relative border-2 h-96 md:w-11/12l w-11/12 m-auto my-10 text-white bg-no-repeat bg-cover bg-center rounded-2xl"
+                        className="relative block h-96 md:w-11/12l w-11/12 m-auto my-10 text-white bg-no-repeat bg-cover bg-center rounded-2xl"
                     >
                         {/* Overlay */}
                         <div className="absolute inset-0 bg-black opacity-60 z-0 rounded-2xl"></div>
@@ -136,13 +132,13 @@ function Hero() {
                         </div>
 
 
-                    </div>
+                    </Link>
                 </div>
 
                <div 
                  id="fixedBox"
-                className={`md:w-3/12 mr-4 z-40 my-10 md:my-0 transition-all duration-300 ${
-            isBottom ? "absolute  left-0 right-0 mx-auto transition-all duration-300" : "md:fixed right-0 transition-all duration-300"
+                className={`md:w-3/12 mr-4 z-40 my-10 md:my-0 transition-all duration-300  ${
+            isBottom ? "absolute right-0 transition-all duration-300" : "md:fixed right-0 transition-all duration-300"
                  }`}
                >
                       <Feautured />

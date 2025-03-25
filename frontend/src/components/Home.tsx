@@ -1,11 +1,12 @@
 
 import Hero from './Hero'
-import { Blog } from './Hero'
+import { BlogInterface } from './Hero'
 import { initialBlog } from './Hero'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Home() {
-    const [blogPost, setBlogPost] = useState<Blog[]>(initialBlog)
+    const [blogPost, setBlogPost] = useState<BlogInterface[]>(initialBlog)
 
     return (
         <>
@@ -18,7 +19,7 @@ function Home() {
                     {
                         blogPost.map((blog) => {
                             return (
-                                <div className=' w-11/12 md:w-3/12 my-10 m-auto md:m-0'>
+                                <Link to={`/blog/${blog.id}`} className=' w-11/12 md:w-3/12 my-10 m-auto md:m-0'>
                                     <img className='w-full h-66 object-cover' src="https://www.3forty.media/jinko/demo-2/wp-content/uploads/2024/03/tfm-featured-image-1-scaled-1-1024x1024.webp" alt="" />
 
                                     <div className='p-4 shadow-2xl'>
@@ -40,7 +41,7 @@ function Home() {
                             relative'>{blog.category}</p>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             )
                         })
                     }
