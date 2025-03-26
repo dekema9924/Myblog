@@ -40,7 +40,7 @@ function Login() {
       console.log(response)
       try {
         if (response.data === 'Login success') {
-          toast.success(response.data.message);
+          toast.success(response.data);
           navigate('/');
         }
       } catch (error) {

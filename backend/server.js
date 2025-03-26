@@ -7,6 +7,7 @@ const LoginRoute = require('./Routes/LoginRoute');
 const mongooseConfig = require('./config/mongoose');
 const ProfileRoute = require('./Routes/ProfileRoute');
 const cors = require('cors');
+const BlogRouter = require('./Routes/BlogRoute');
 
 
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', LoginRoute);
 app.use('/profile', ProfileRoute)
+app.use('/blogs', BlogRouter)
 
 
 

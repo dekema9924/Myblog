@@ -6,13 +6,24 @@ import SubscribeButton from './SubscribeButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/Store';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useDispatch } from 'react-redux';
+import { userLogOut } from '../features/UserSlice';
+import Cookies from 'js-cookie';
 
 
 function Header() {
     const [isNavOpen, setIsNavOpen] = useState(false)
     const user = useSelector((state: RootState) => state.user.value)
+    const dispatch = useDispatch()
+
 
     isNavOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
+
+    //logout function
+    const HandleLogout=()=>{
+        dispatch(userLogOut())
+        Cookies.remove('token')
+    }
 
     return (
         <>
@@ -43,7 +54,9 @@ function Header() {
                         <div className='flex items-center gap-2'>
                                  <p className='underline capitalize font-semibold'>{user.username}</p>
                             
-                            <ExitToAppIcon style={{fontSize: '2em'}} className='text-red-400 cursor-pointer'/>
+                           <div onClick={HandleLogout} className=' '>
+                                <ExitToAppIcon style={{fontSize: '2em'}} className='text-red-400 cursor-pointer'/>
+                           </div>
                             
                         </div>
                 }
