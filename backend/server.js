@@ -5,11 +5,19 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 const LoginRoute = require('./Routes/LoginRoute');
 const mongooseConfig = require('./config/mongoose');
+const ProfileRoute = require('./Routes/ProfileRoute');
+const cors = require('cors');
 
 
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', LoginRoute);
+app.use('/profile', ProfileRoute)
 
 
 

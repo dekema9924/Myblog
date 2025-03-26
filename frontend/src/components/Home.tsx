@@ -19,8 +19,8 @@ function Home() {
                     {
                         blogPost.map((blog) => {
                             return (
-                                <Link to={`/blog/${blog.id}`} className=' w-11/12 md:w-3/12 my-10 m-auto md:m-0'>
-                                    <img className='w-full h-66 object-cover' src="https://www.3forty.media/jinko/demo-2/wp-content/uploads/2024/03/tfm-featured-image-1-scaled-1-1024x1024.webp" alt="" />
+                                <Link key={blog.id} to={`/blog/${blog.id}`} className=' w-11/12 md:w-3/12 my-10 m-auto md:m-0'>
+                                    <img className='w-full h-66 object-cover' src={blog.img} alt="blogposter" />
 
                                     <div className='p-4 shadow-2xl'>
                                         <h1 className='text-3xl font-bold capitalize '>{blog.title}</h1>

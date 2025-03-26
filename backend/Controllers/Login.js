@@ -10,11 +10,11 @@ const LoginController = async (req, res) => {
         ]
     });
 
-    if (!findUser) return res.status(400).send('Invalid username or email');
+    if (!findUser) return res.status(400).json({message: 'Invalid username or email'});
 
     // Load hash from your password DB.
     bcrypt.compare(req.body.password, findUser.password, function (err, result) {
-        if (!result) return res.status(400).send('Invalid password');
+        if (!result) return res.status(400).json({message: 'Invalid password'});
 
         // Generate token
         let token = GenerateToken(findUser);

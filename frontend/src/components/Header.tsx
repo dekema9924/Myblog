@@ -31,7 +31,7 @@ function Header() {
                 </ul>
 
                 <div className='flex items-center gap-2'>
-                    <Brightness3Icon className='mr-4 cursor-pointer' />
+                    {/* <Brightness3Icon className='mr-4 cursor-pointer' /> */}
                     {/* <SearchIcon className='cursor-pointer ' /> */}
                     <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link>
                     <Link to={'/Register'} className='underline'>Register</Link>

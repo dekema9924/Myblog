@@ -34,19 +34,20 @@ function Feautured() {
     ]
 
     const [featured, setFeatured] = useState(initialState)
+    
     return (
         <>
             <section className=" md:w-11/12 w-full p-4 flex flex-col gap-4 shadow-2xl bg-white">
                 <p className="text-gray-500 font-bold">Featured</p>
 
                 {
-                    featured.map((post, index) => {
+                    featured.map((post) => {
                         return (
                             <>
                                 <div>
                                 
-                                    <Link to={`/blog/${post.id}`} key={index} className="flex items-center gap-4">
-                                        {post.img ? <img src={post.img} alt="" className="w-24 h-24 object-cover" /> : ""}
+                                    <Link to={`/blog/${post.id}`} key={post.id} className="flex items-center gap-4">
+                                        {post.img ? <img src={post.img} alt="blogPoster" className="w-24 h-24 object-cover" /> : ""}
                                         <div>
                                             <h1 className="text-xl font-bold  ">{post.title}</h1>
                                             <p>{post.date}</p>
