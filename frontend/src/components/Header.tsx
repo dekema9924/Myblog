@@ -1,14 +1,16 @@
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Brightness3Icon from '@mui/icons-material/Brightness3';
-import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SubscribeButton from './SubscribeButton';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/Store';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 
 function Header() {
     const [isNavOpen, setIsNavOpen] = useState(false)
+    const user = useSelector((state: RootState) => state.user.value)
 
     isNavOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
 
@@ -20,23 +22,31 @@ function Header() {
                     <MoreHorizIcon
                         onClick={() => setIsNavOpen(true)}
                         className="ml-4 cursor-pointer block md:hidden"
-                    />                
-                     <Link to={'/'} className='text-[2em] font-bold'>Jzeko</Link>
+                    />
+                    <Link to={'/'} className='text-[2em] font-bold'>Jzeko</Link>
                 </div>
                 <ul className='lg:flex hidden gap-4 items-center font-bold '>
                     <li>LifeStyle</li>
                     <li>Beauty</li>
                     <li>Travel</li>
-                    <SubscribeButton/>
+                    <SubscribeButton />
                 </ul>
+                {
 
-                <div className='flex items-center gap-2'>
-                    {/* <Brightness3Icon className='mr-4 cursor-pointer' /> */}
-                    {/* <SearchIcon className='cursor-pointer ' /> */}
-                    <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link>
-                    <Link to={'/Register'} className='underline'>Register</Link>
+                    !user?.username?
+                        <div className='flex items-center gap-2'>
+                            <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link>
+                            <Link to={'/Register'} className='underline'>Register</Link>
 
-                </div>
+                        </div>
+                        : 
+                        <div className='flex items-center gap-2'>
+                                 <p className='underline capitalize font-semibold'>{user.username}</p>
+                            
+                            <ExitToAppIcon style={{fontSize: '2em'}} className='text-red-400 cursor-pointer'/>
+                            
+                        </div>
+                }
             </header>
 
 
@@ -57,14 +67,9 @@ function Header() {
                     <li>Travel</li>
                     <li>Art & Design</li>
                     <li>Subscribe</li>
-                    <form>
-                        <div className='relative flex items-center'>
-                            <input className='border-2 text-sm w-11/12 h-10 pl-2 rounded-md border-gray-400 outline-none' type="text" name="" placeholder='search and press enter ' />
-                            <SearchIcon className='absolute right-14 ' />
-                        </div>
-                    </form>
-                    <p className='text-lg'>Dark Mode <Brightness3Icon /></p>
-                    <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link>
+                    {
+                        !user.username ? <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link> : ""
+                    }
 
 
                 </ul>

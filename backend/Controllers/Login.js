@@ -2,6 +2,7 @@ const User = require('../models/UserModel')
 const bcrypt = require('bcryptjs');
 const  GenerateToken  = require('../utils/createToken');
 
+
 const LoginController = async (req, res) => {
     const findUser = await User.findOne({
         $or: [
@@ -22,7 +23,7 @@ const LoginController = async (req, res) => {
 
         // Send token as cookie
         res.cookie('token', token, {
-            httpOnly: true,  
+            // httpOnly: true,  
             secure: true,  
             sameSite: "strict",
             expires: new Date(Date.now() + 60 * 60 * 1000)  // 1 hour

@@ -2,11 +2,46 @@
 import Hero from './Hero'
 import { BlogInterface } from './Hero'
 import { initialBlog } from './Hero'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../features/UserSlice'
+import axios from 'axios'
+import Config from '../config/config'
+
 
 function Home() {
     const [blogPost, setBlogPost] = useState<BlogInterface[]>(initialBlog)
+    const dispatch = useDispatch()
+    const token = Cookies.get('token')
+
+    //get user profile data
+    const getProfile = async () => {
+        axios.defaults.withCredentials = true
+        await axios.get(`${Config.ApiUrl}/profile`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) => {
+            console.log(response)
+            dispatch(userLogin({id: response.data.id, username: response.data.username}))
+        })
+    }
+
+    //check if token exist
+    useEffect(() => {
+        if (token) {
+            //store token in store
+            dispatch(userLogin({ token: token }))
+        }
+        getProfile()
+
+    }, [token])
+
+
+
+
 
     return (
         <>
