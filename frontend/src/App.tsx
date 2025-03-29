@@ -5,13 +5,15 @@ import ReadBlog from "./components/ReadBlog"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import { Toaster } from "react-hot-toast"
-
+import ScrollToTopOnRouteChange from "./components/ScrollToTop"
 
 function App() {
 
+ScrollToTopOnRouteChange({})
+
   return (
     <>
-    <Toaster />
+      <Toaster />
       <Header />
       <div className="mt-24 ">
         <Routes>

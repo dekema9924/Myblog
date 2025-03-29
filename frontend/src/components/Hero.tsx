@@ -1,106 +1,101 @@
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Feautured from './Feautured';
 import RandomPost from './RandomPost';
 import { Link } from 'react-router-dom';
+import { useSelector, UseSelector } from 'react-redux';
+import { RootState } from '../store/Store';
+
 
 
 export interface BlogInterface {
-    id: number
+    _id: string
     title: string
     date: string
     readTime: number
-    description: string
+    summary: string
     category: string
-    img: string
+    image: string
+    content: string
+    views: number
 }
 
 export const initialBlog: BlogInterface[] = [
     {
-        title: 'Style begin mr heard by in music do',
-        date: 'March 6, 2025',
-        readTime: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad doloribus accusantium, nemo ducimus impedit distinctio repellat, id amet nam dignissimos quo ipsam ex illo sequi vel perspiciatis asperiores incidunt commodi.',
-        category: 'Beauty',
-        id: 1,
-        img: 'https://www.3forty.media/ruki/wp-content/uploads/2020/06/60643-768x768.jpg'
-    },
-    {
-        title: 'Style begin mr heard by in music do',
-        date: 'March 5, 2025',
-        readTime: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad doloribus accusantium, nemo ducimus impedit distinctio repellat, id amet nam dignissimos quo ipsam ex illo sequi vel perspiciatis asperiores incidunt commodi.',
-        category: 'Art',
-        id: 2,
-        img: 'https://www.3forty.media/jinko/demo-2/wp-content/uploads/2024/03/tfm-featured-image-1-scaled-1-1024x1024.webp'
-    },
-    {
-        title: 'Style begin mr heard by in music do',
-        date: 'March 7, 2025',
-        readTime: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad doloribus accusantium, nemo ducimus impedit distinctio repellat, id amet nam dignissimos quo ipsam ex illo sequi vel perspiciatis asperiores incidunt commodi.',
-        category: 'Happy',
-        id: 3,
-        img: 'https://www.3forty.media/ruki/wp-content/uploads/2020/06/japan-scene2-768x1086.jpg'
-    },
-    {
-        title: 'Style begin mr heard by in music do',
-        date: 'March 7, 2025',
-        readTime: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad doloribus accusantium, nemo ducimus impedit distinctio repellat, id amet nam dignissimos quo ipsam ex illo sequi vel perspiciatis asperiores incidunt commodi.',
-        category: 'Happy',
-        id: 3,
-        img: 'https://www.3forty.media/ruki/wp-content/uploads/2020/06/japan-scene2-768x1086.jpg'
-    },
-    {
-        title: 'Style begin mr heard by in music do',
-        date: 'March 7, 2025',
-        readTime: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad doloribus accusantium, nemo ducimus impedit distinctio repellat, id amet nam dignissimos quo ipsam ex illo sequi vel perspiciatis asperiores incidunt commodi.',
-        category: 'Happy',
-        id: 3,
-        img: 'https://www.3forty.media/ruki/wp-content/uploads/2020/06/japan-scene2-768x1086.jpg'
-    },
-    {
-        title: 'Style begin mr heard by in music do',
-        date: 'March 7, 2025',
-        readTime: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad doloribus accusantium, nemo ducimus impedit distinctio repellat, id amet nam dignissimos quo ipsam ex illo sequi vel perspiciatis asperiores incidunt commodi.',
-        category: 'Happy',
-        id: 3,
-        img: 'https://www.3forty.media/ruki/wp-content/uploads/2020/06/japan-scene2-768x1086.jpg'
+        _id: "1",
+        title: "Sample Blog",
+        date: new Date().toISOString(),
+        readTime: 5,
+        summary: "This is a sample blog summary.",
+        category: "General",
+        image: "https://www.3forty.media/jinko/demo-2/wp-content/uploads/2024/03/tfm-featured-image-1-scaled-1-1024x1024.webp",
+        content: "This is the content of the sample blog.",
+        views: 441
     }
 ]
 
 function Hero() {
-    const rnd = Math.floor(Math.random() * initialBlog.length)
-
-    const [rndBlog, setRndBlog] = useState(initialBlog[rnd])
-
-    setTimeout(() => {
-        setRndBlog(initialBlog[rnd])
-    }, 4000)
-
-
+    const blogs = useSelector((state: RootState) => state.blog.value)
+    const rnd = Math.floor(Math.random() * blogs.length)
+    const [rndBlog, setRndBlog] = useState(blogs[rnd])
     const [isBottom, setIsBottom] = useState(false);
 
+    // Update the random blog every 8 seconds
     useEffect(() => {
+        if (blogs.length > 0) {
+            const updateRandomBlog = () => {
+                const rnd = Math.floor(Math.random() * blogs.length);
+                setRndBlog(blogs[rnd]);
+            };
+
+            const interval = setInterval(updateRandomBlog, 8000);
+            return () => clearInterval(interval);
+        }
+    }, [blogs]);
+
+    // Estimate read time
+    const totalWords = rndBlog.content
+        ? rndBlog.content.split(" ").length
+        : 0;
+
+    const estimatedTime = Math.ceil(totalWords / 200);
+    // console.log(`Estimated read time: ${estimatedTime} min`); //debugging
+
+
+
+
+    setTimeout(() => {
+        setRndBlog(blogs[rnd])
+    }, 8000)
+
+
+
+    useEffect(() => {
+        let ticking = false;
+
         const handleScroll = () => {
-          const scrollPosition = window.scrollY + window.innerHeight;
-          const docHeight = document.documentElement.scrollHeight;
-    
-          // Check if the user is at the bottom
-          if (scrollPosition >= docHeight - 10) {
-            setIsBottom(true);
-          } else {
-            setIsBottom(false);
-          }
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollPosition = window.scrollY + window.innerHeight;
+                    const docHeight = document.documentElement.scrollHeight;
+
+                    if (scrollPosition >= docHeight - 10) {
+                        setIsBottom(true);
+                    } else {
+                        setIsBottom(false);
+                    }
+
+                    ticking = false;
+                });
+
+                ticking = true;
+            }
         };
-    
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-      }, []);
-  
+    }, []);
+
 
 
     return (
@@ -111,39 +106,45 @@ function Hero() {
                 <p className="text-gray-400">A Stunning Personal Blog </p>
             </div>
             <div className='md:flex flex-col justify-between  gap-10'>
-                <div className=' md:w-9/12'>
-                    <Link to={`/blog/${rndBlog.id}`}
-                        style={{ backgroundImage: `url(${rndBlog.img})` }}
-                        className="relative block h-96 md:w-11/12l w-11/12 m-auto my-10 text-white bg-no-repeat bg-cover bg-center rounded-2xl"
-                    >
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-black opacity-60 z-0 rounded-2xl"></div>
+                {
+                    blogs ?
+                        <>
+                            <div className=' md:w-9/12'>
+                                <Link to={`/blog/${rndBlog._id}`}
+                                    style={{ backgroundImage: `url(${rndBlog.image})` }}
+                                    className="relative block h-96 md:w-11/12l w-11/12 m-auto my-10 text-white bg-no-repeat bg-cover bg-center rounded-2xl"
+                                >
+                                    {/* Overlay */}
+                                    <div className="absolute inset-0 bg-black opacity-60 z-0 rounded-2xl"></div>
 
-                        {/* Content */}
-                        <div className="relative z-10 p-6">
-                            <span className=' rounded-4xl text-sm block w-30 h-6 text-center bg-red-400 text-white font-semibold m-auto my-10'>{rndBlog.category}</span>
-                            <h1 className='text-2xl font-bold text-center'>{rndBlog.title}</h1>
-                            <div className='flex items-center gap-2 justify-center my-2 font-bold  text-sm '>
-                                <img src="" alt="" />
-                                <p>Njeko</p>
-                                <p>-{rndBlog.date}</p>
-                                <p>-<AccessTimeIcon className='mx-1' style={{ fontSize: "17px" }} />{rndBlog.readTime}min Read</p>
+                                    {/* Content */}
+                                    <div className="relative z-10 p-6">
+                                        <span className=' rounded-4xl text-sm block w-30 h-6 text-center bg-red-400 text-white font-semibold m-auto my-10'>{rndBlog.category}</span>
+                                        <h1 className='text-2xl font-bold text-center'>{rndBlog.title}</h1>
+                                        <div className='flex items-center gap-2 justify-center my-2 font-bold  text-sm '>
+                                            <p>Njeko</p>
+                                            <p>{new Date(rndBlog.date).toISOString().split("T")[0]}</p>
+                                            <p>-<AccessTimeIcon className='mx-1' style={{ fontSize: "17px" }} />{estimatedTime}min Read</p>
+                                        </div>
+                                    </div>
+
+
+                                </Link>
                             </div>
-                        </div>
-
-
-                    </Link>
+                        </>
+                        : "...loading"
+                }
+                  <div
+      id="fixedBox"
+      className={`md:w-3/12 mr-4 z-40 my-10 md:my-0 transition-all duration-300 ${
+        isBottom
+          ? "md:fixed bottom-10 right-0" // Fix it to the bottom when at the bottom
+          : "md:fixed right-0 top-66" // Fix it to the top by default
+      }`}
+    >
+                    <Feautured />
+                    <RandomPost />
                 </div>
-
-               <div 
-                 id="fixedBox"
-                className={`md:w-3/12 mr-4 z-40 my-10 md:my-0 transition-all duration-300  ${
-            isBottom ? "absolute right-0 transition-all duration-300" : "md:fixed right-0 transition-all duration-300"
-                 }`}
-               >
-                      <Feautured />
-                      <RandomPost/>
-               </div>
 
             </div>
         </>

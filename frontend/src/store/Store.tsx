@@ -1,11 +1,13 @@
 // continue with redux
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from '../features/UserSlice'
+import blogReducer from '../features/BlogSlice'
 
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    blog: blogReducer
   }
 });
 
