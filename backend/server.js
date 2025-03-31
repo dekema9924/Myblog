@@ -13,7 +13,7 @@ const BlogRouter = require('./Routes/BlogRoute');
 
 
 app.use(cors({
-    origin: '*',
+    origin: 'https://jzeko.netlify.app',
     credentials: true
 }));
 app.use(express.json());
