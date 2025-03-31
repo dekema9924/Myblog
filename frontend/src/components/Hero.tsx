@@ -28,7 +28,7 @@ export const initialBlog: BlogInterface[] = [
         readTime: 5,
         summary: "This is a sample blog summary.",
         category: "General",
-        image: "https://www.3forty.media/jinko/demo-2/wp-content/uploads/2024/03/tfm-featured-image-1-scaled-1-1024x1024.webp",
+        image: "https://picsum.photos/200/300?random=7",
         content: "This is the content of the sample blog.",
         views: 441
     }

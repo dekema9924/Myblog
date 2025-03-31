@@ -37,9 +37,9 @@ function Header() {
                     <Link to={'/'} className='text-[2em] font-bold'>Jzeko</Link>
                 </div>
                 <ul className='lg:flex hidden gap-4 items-center font-bold '>
-                    <li>LifeStyle</li>
+                    {/* <li>LifeStyle</li>
                     <li>Beauty</li>
-                    <li>Travel</li>
+                    <li>Travel</li> */}
                     <SubscribeButton />
                 </ul>
                 {
@@ -75,10 +75,10 @@ function Header() {
 
 
                 <ul className='mt-4 flex flex-col gap-4 p-4 text-2xl font-semibold'>
-                    <li>LifeStyle</li>
+                    {/* <li>LifeStyle</li>
                     <li>Beauty</li>
                     <li>Travel</li>
-                    <li>Art & Design</li>
+                    <li>Art & Design</li> */}
                     <li>Subscribe</li>
                     {
                         !user.username ? <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link> : ""
