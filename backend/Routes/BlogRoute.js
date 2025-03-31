@@ -1,7 +1,7 @@
 
 const express = require('express')
 const BlogRouter = express.Router()
-const getAllBlogs = require('../Controllers/BlogController/GetAllBlogs')
+const getAllBlogs = require('../Controllers/BlogController/getAllBlogs')
 const TrendingBlogs = require('../Controllers/BlogController/TrendingBlogs')
 const  getBlogById  = require('../Controllers/BlogController/GetbyId')
 
