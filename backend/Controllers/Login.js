@@ -19,7 +19,6 @@ const LoginController = async (req, res) => {
 
         // Generate token
         let token = GenerateToken(findUser);
-        console.log(token);
 
         // Send token as cookie
         res.cookie('token', token, {

@@ -1,6 +1,6 @@
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SubscribeButton from './SubscribeButton';
 import { useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ function Header() {
     isNavOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
 
     //logout function
-    const HandleLogout=()=>{
+    const HandleLogout = () => {
         dispatch(userLogOut())
         Cookies.remove('token')
     }
@@ -40,24 +40,26 @@ function Header() {
                     {/* <li>LifeStyle</li>
                     <li>Beauty</li>
                     <li>Travel</li> */}
-                    <SubscribeButton />
+                    {
+                        user?.username ? <SubscribeButton /> : ""
+                    }
                 </ul>
                 {
 
-                    !user?.username?
+                    !user?.username ?
                         <div className='flex items-center gap-2'>
                             <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link>
                             <Link to={'/Register'} className='underline'>Register</Link>
 
                         </div>
-                        : 
+                        :
                         <div className='flex items-center gap-2'>
-                                 <p className='underline capitalize font-semibold'>{user.username}</p>
-                            
-                           <div onClick={HandleLogout} className=' '>
-                                <ExitToAppIcon style={{fontSize: '2em'}} className='text-red-400 cursor-pointer'/>
-                           </div>
-                            
+                            <p className='underline capitalize font-semibold'>{user.username}</p>
+
+                            <div onClick={HandleLogout} className=' '>
+                                <ExitToAppIcon style={{ fontSize: '2em' }} className='text-red-400 cursor-pointer' />
+                            </div>
+
                         </div>
                 }
             </header>
@@ -79,7 +81,9 @@ function Header() {
                     <li>Beauty</li>
                     <li>Travel</li>
                     <li>Art & Design</li> */}
-                    <li>Subscribe</li>
+                    {
+                        user?.username ? <SubscribeButton /> : ""
+                    }
                     {
                         !user.username ? <Link to={'/login'} className=' border-2 w-24 text-center text-sm flex items-center justify-center font-bold bg-black text-white h-10 rounded-md cursor-pointer'>LogIn</Link> : ""
                     }
