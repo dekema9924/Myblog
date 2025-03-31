@@ -4,7 +4,7 @@
 
 const Config ={
 
-    ApiUrl: 'http://localhost:3000',
+    ApiUrl: 'https://myblog-1ka2.onrender.com',
 }
 
 export default Config;

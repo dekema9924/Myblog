@@ -33,9 +33,8 @@ function Feautured() {
                     featured?.map((post) => {
                         return (
                             <>
-                                <div>
-                                
-                                    <Link to={`/blog/${post._id}`} key={post._id} className="flex items-center gap-4">
+                                <div key={post._id}>
+                                    <Link  to={`/blog/${post._id}`} className="flex items-center gap-4">
                                         {post.image ? <img src={post.image} alt="blogPoster" className="w-24 h-24 object-cover" /> : ""}
                                         <div>
                                             <h1 className="text-xl font-bold  ">{post.title}</h1>
